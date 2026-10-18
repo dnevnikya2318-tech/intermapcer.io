@@ -12,7 +12,7 @@ let apiBaseUrl = null;
 
 
 document.addEventListener('DOMContentLoaded', async () => {
-    configResponse = await fetch('./config.json');
+    configResponse = await fetch('../config.json');
     config = await configResponse.json();
     apiBaseUrl = config.API_BASE_URL;
 });
