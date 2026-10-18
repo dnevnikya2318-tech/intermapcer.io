@@ -1,5 +1,5 @@
 {
-    "API_BASE_URL": "",
-    "S3_BASE_URL": "/user-images/",
+    "API_BASE_URL": "https://flat-humans-scream.loca.lt",
+    "S3_BASE_URL": "https://busy-badgers-stare.loca.lt/user-images/",
     "FRONT_BASE_URL": "https://dnevnikya2318-tech.github.io/intermapcer.io"
 }
