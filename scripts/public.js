@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const fileId = urlParams.get('map');
     const logoutBtn = document.getElementById('logoutBtn');
 
-    configResponse = await fetch('./config.json');
+    configResponse = await fetch('../config.json');
     config = await configResponse.json();
     apiBaseUrl = config.API_BASE_URL;
     s3BaseUrl = config.S3_BASE_URL;
@@ -44,7 +44,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     await fetch(backendUrl, {
         method: 'GET',
         headers: {
-            'Accept': 'application/json'
+            'Accept': 'application/json',
+            'bypass-tunnel-reminder': true
         }
     })
     .then(response => {
@@ -102,7 +103,10 @@ async function showMap(filePath) {
     try {
         const response = await fetch(`${apiBaseUrl}/landmarks/map/${currMapId}`, {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 
+                'Content-Type': 'application/json',
+                'bypass-tunnel-reminder': true
+            }
         });
         const data = await response.json();
         data.forEach(element => {

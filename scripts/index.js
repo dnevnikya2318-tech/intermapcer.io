@@ -266,7 +266,10 @@ async function showMap(filePath) {
     try {
         const response = await fetch(`${apiBaseUrl}/landmarks/map/${currMapId}`, {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 
+                'Content-Type': 'application/json',
+                'bypass-tunnel-reminder': true
+            }
         });
         const data = await response.json();
         data.forEach(element => {
@@ -293,7 +296,10 @@ async function showMap(filePath) {
 async function showTitle() {
     const response = await fetch(`${apiBaseUrl}/maps/${currMapId}`, {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 
+            'Content-Type': 'application/json', 
+            'bypass-tunnel-reminder': true 
+        }
     });
     const mapTitleInput = document.getElementById('mapTitleInput');
     const mapTitleForm = document.getElementById('mapTitleForm');
@@ -308,14 +314,18 @@ async function showTitle() {
         try {
             const oldResponse = await fetch(`${apiBaseUrl}/maps/${currMapId}`, {
                 method: 'GET',
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    'bypass-tunnel-reminder': true
+                 }
             });
             oldMap = await oldResponse.json();
             const newResponse = await fetch(`${apiBaseUrl}/maps/${currMapId}`, {
                 method: 'PUT',
                 headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    'Content-Type': 'application/json', 
+                    'Authorization': `Bearer ${token}`,
+                    'bypass-tunnel-reminder': true
                  },
                 body: JSON.stringify({ ownerId: oldMap.ownerId, title: mapTitleInput.value, isPublic: oldMap.isPublic, imagePath: oldMap.imagePath, imageName: oldMap.imageName })
             })
@@ -346,14 +356,18 @@ async function showTitle() {
             try {
                 const oldResponse = await fetch(`${apiBaseUrl}/maps/${currMapId}`, {
                     method: 'GET',
-                    headers: { 'Content-Type': 'application/json' }
+                    headers: { 
+                        'Content-Type': 'application/json', 
+                        'bypass-tunnel-reminder': true,
+                     }
                 });
                 oldMap = await oldResponse.json();
                 const newResponse = await fetch(`${apiBaseUrl}/maps/${currMapId}`, {
                     method: 'PUT',
                     headers: { 
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
+                        'Authorization': `Bearer ${token}`,
+                        'bypass-tunnel-reminder': true
                     },
                     body: JSON.stringify({ ownerId: oldMap.ownerId, title: oldMap.title, isPublic: true, imagePath: oldMap.imagePath, imageName: oldMap.imageName })
                 })
@@ -366,14 +380,18 @@ async function showTitle() {
             try {
                 const oldResponse = await fetch(`${apiBaseUrl}/maps/${currMapId}`, {
                     method: 'GET',
-                    headers: { 'Content-Type': 'application/json' }
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'bypass-tunnel-reminder': true,
+                     }
                 });
                 oldMap = await oldResponse.json();
                 const newResponse = await fetch(`${apiBaseUrl}/maps/${currMapId}`, {
                     method: 'PUT',
                     headers: { 
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
+                        'Authorization': `Bearer ${token}`,
+                        'bypass-tunnel-reminder': true
                     },
                     body: JSON.stringify({ ownerId: oldMap.ownerId, title: oldMap.title, isPublic: false, imagePath: oldMap.imagePath, imageName: oldMap.imageName })
                 })
@@ -463,7 +481,8 @@ addLabelBtn.addEventListener('click', async () => {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
+                'bypass-tunnel-reminder': true
             },
             body: JSON.stringify({ 
                 mapId: currMapId, 
@@ -515,7 +534,8 @@ deleteLabelBtn.addEventListener('click', async () => {
         const response = await fetch(`${apiBaseUrl}/landmarks/${selectedMarkerId}`, {
             method: 'DELETE',
             headers: { 
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
+                'bypass-tunnel-reminder': true
             }})
     } catch (error) {
         console.error(error);
@@ -559,7 +579,8 @@ const s3Response = async (fileObject) => {
         const response = await fetch(`${apiBaseUrl}/api/images/upload`, {
             method: 'POST',
             headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${token}`,
+                    'bypass-tunnel-reminder': true
                 },
             body: formData
         });
@@ -605,7 +626,10 @@ async function loadMapsList(userId) {
     try {
         const response = await fetch(`${apiBaseUrl}/maps/user/${userId}`, {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 
+            'Content-Type': 'application/json',
+            'bypass-tunnel-reminder': true
+         }
         });
 
         if (!response.ok) {
@@ -649,7 +673,10 @@ async function uploadMap(file) {
         try {
             const response = await fetch(`${apiBaseUrl}/maps`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json', 
+                    'bypass-tunnel-reminder': true
+                 },
                 body: JSON.stringify({ ownerId: ownerId, title: "My Map", isPublic: false, imagePath: s3Data.imageUrl, imageName: s3Data.imageName })
             });
             if (!response.ok) {
@@ -710,7 +737,8 @@ async function deleteMap(id, imageName) {
             await fetch(`${apiBaseUrl}/maps/${id}`, {
                 method: 'DELETE',
                 headers: {
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${token}`,
+                    'bypass-tunnel-reminder': true
                 } 
             });
             resetMap();
@@ -926,7 +954,10 @@ updateLabelBtn.addEventListener('click', async (e) => {
     try {
         const response = await fetch(`${apiBaseUrl}/landmarks/${markId}`, {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
+            headers: { 
+                'Content-Type': 'application/json',
+                'bypass-tunnel-reminder': true
+         }
         });
         const data = await response.json();
         
@@ -985,7 +1016,8 @@ putLabelBtn.addEventListener('click', async () => {
             method: 'PUT',
             headers: { 
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`,
+                'bypass-tunnel-reminder': true
             },
             body: JSON.stringify({ 
                 mapId: currPoint.MapId, 
@@ -1032,7 +1064,9 @@ putLabelBtn.addEventListener('click', async () => {
 
 const uploadImageFromUrl = async (imageUrl) => {
     try {
-        const response = await fetch(imageUrl);
+        const response = await fetch(imageUrl, {
+            headers: { 'bypass-tunnel-reminder': true }
+        });
 
         if(!response.ok) {
             throw new Error(`Unable to download image: ${response.statusText}`);

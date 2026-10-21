@@ -35,7 +35,10 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
     try {
         const response = await fetch(`${apiBaseUrl}/api/auth/login`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'bypass-tunnel-reminder': true
+             },
             body: JSON.stringify({ email: emailLogin, password: passwordLogin})
         });
 
@@ -76,7 +79,10 @@ registerForm.addEventListener('submit', async (e) => {
         // Отправка запроса на бэкенд
         const response = await fetch(`${apiBaseUrl}/api/auth/register`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json', 
+                'bypass-tunnel-reminder': true
+             },
             body: JSON.stringify({
                 username: usernameInput,
                 email: emailInput,
@@ -118,7 +124,10 @@ verificationForm.addEventListener('submit', async (e) => {
     try {
         const response = await fetch(`${apiBaseUrl}/api/auth/verify-code`, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json', 
+                'bypass-tunnel-reminder': true
+            },
             body: JSON.stringify({ email: currEmail, code: verificationInput.value })
         });
 
