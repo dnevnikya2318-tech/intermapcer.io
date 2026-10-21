@@ -250,5 +250,5 @@ async function loadImage(imageUrl, imgElementId) {
     const blob = await response.blob();
     const objectURL = URL.createObjectURL(blob);
 
-    document.getElementById(imgElementId).src = objectURL;
+    imgElementId.src = objectURL;
 }
