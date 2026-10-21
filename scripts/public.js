@@ -96,7 +96,7 @@ function positionPopup(popupElement, x, y) {
 }
 
 async function showMap(filePath) {
-    fullPreview.src = filePath;
+    await loadImage(filePath, fullPreview);
 
     markersLayer.innerHTML = '';
 
@@ -109,7 +109,7 @@ async function showMap(filePath) {
             }
         });
         const data = await response.json();
-        data.forEach(element => {
+        data.forEach(async element => {
             const point = new Point(
                 element.id,
                 element.mapId,
@@ -122,14 +122,14 @@ async function showMap(filePath) {
                 element.imagePath,
                 element.imageName
             );
-            createMarker(point);
+            await createMarker(point);
     })} catch(error) {
         console.log(error);
     }
 }
 
 // При вызове функция создаёт на карте маркеры и соответствующие им описания
-function createMarker(point) {
+async function createMarker(point) {
     const id = point.Id;
 
     const marker = document.createElement('div');
@@ -163,7 +163,7 @@ function createMarker(point) {
     if (point.ImagePath != null)
     {
         const labelImg = document.createElement('img');
-        labelImg.src = s3BaseUrl + point.ImageName;
+        await loadImage(s3BaseUrl + point.ImageName, labelImg);
         label.appendChild(labelImg);
     }
 
@@ -235,4 +235,20 @@ const markerColorSelection = (markType) => {
             break;
     }
     return rgb;
+}
+
+async function loadImage(imageUrl, imgElementId) {
+    const response = await fetch(imageUrl, {
+        method: 'GET',
+        headers: {
+            'bypass-tunnel-reminder': 'true'
+        }
+    });
+
+    if (!response.ok) throw new Error('Download error');
+
+    const blob = await response.blob();
+    const objectURL = URL.createObjectURL(blob);
+
+    document.getElementById(imgElementId).src = objectURL;
 }

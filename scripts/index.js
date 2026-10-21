@@ -142,7 +142,7 @@ function positionPopup(popupElement, x, y) {
 }
 
 // При вызове функция создаёт на карте маркеры и соответствующие им описания
-function createMarker(point) {
+async function createMarker(point) {
     const id = point.Id;
 
     const marker = document.createElement('div');
@@ -176,7 +176,7 @@ function createMarker(point) {
     if (point.ImageName != null)
     {
         const labelImg = document.createElement('img');
-        labelImg.src = s3BaseUrl + point.ImageName;
+        await loadImage(s3BaseUrl + point.ImageName, labelImg);
         label.appendChild(labelImg);
     }
 
@@ -256,7 +256,7 @@ dropArea.addEventListener('drop', async (e) => {
 });
 
 async function showMap(filePath) {
-    fullPreview.src = filePath;
+    await loadImage(filePath, fullPreview);
 
     mainTitle.style.display = 'none';
     dropArea.style.display = 'none';
@@ -272,7 +272,7 @@ async function showMap(filePath) {
             }
         });
         const data = await response.json();
-        data.forEach(element => {
+        data.forEach(async element => {
             const point = new Point(
                 element.id,
                 element.mapId,
@@ -285,7 +285,7 @@ async function showMap(filePath) {
                 element.imagePath,
                 element.imageName
             );
-            createMarker(point);
+            await createMarker(point);
     })} catch(error) {
         console.log(error);
     }
@@ -513,7 +513,7 @@ addLabelBtn.addEventListener('click', async () => {
             markImageName
         );
 
-        createMarker(point);
+        await createMarker(point);
 
         titleInput.value = '';
         descriptionInput.value = '';
@@ -798,7 +798,6 @@ uploadMarkImageBox.addEventListener('click', () => {
     }
 });
 
-// 2. 
 markImageInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
 
@@ -983,7 +982,7 @@ updateLabelBtn.addEventListener('click', async (e) => {
         sizePreview.style.fontSize = currPoint.Size + 'px';
         sizePreview.style.color = markerColorSelection(currPoint.MarkType);
         if (currPoint.ImagePath != null) {
-            previewMarkImage.src = s3BaseUrl + currPoint.ImageName;
+            await loadImage(s3BaseUrl + currPoint.ImageName, previewMarkImage);
             previewMarkImage.style.display = 'block';
             uploadPlusIcon.style.display = 'none';
             removeMarkImageBtn.style.display = 'flex';
@@ -1002,9 +1001,9 @@ putLabelBtn.addEventListener('click', async () => {
         markImageName = currPoint.ImageName;
         markImagePath = currPoint.ImagePath;
     }
-
-    if ((markImagePath != null && previewMarkImage.src != currPoint.ImagePath)
-        || (currPoint.ImagePath == null && uploadPlusIcon.style.display == 'none')){
+    // To update
+    if ((markImagePath != null && previewMarkImage.src != currPoint.ImagePath) //If there was image and it has been swapped
+        || (currPoint.ImagePath == null && uploadPlusIcon.style.display == 'none')){ //If there was no image and it was added
         const imageUploadResponse = await uploadImageFromUrl(previewMarkImage.src);
         markImageName = imageUploadResponse.imageName;
         markImagePath = imageUploadResponse.imageUrl;
@@ -1050,7 +1049,7 @@ putLabelBtn.addEventListener('click', async () => {
             markImageName
         );
 
-        createMarker(point);
+        await createMarker(point);
 
         titleInput.value = '';
         descriptionInput.value = '';
@@ -1093,4 +1092,20 @@ const uploadImageFromUrl = async (imageUrl) => {
     } catch (error) {
         console.error('Error occured during image processing:', error);
     }
+}
+
+async function loadImage(imageUrl, imgElementId) {
+    const response = await fetch(imageUrl, {
+        method: 'GET',
+        headers: {
+            'bypass-tunnel-reminder': 'true'
+        }
+    });
+
+    if (!response.ok) throw new Error('Download error');
+
+    const blob = await response.blob();
+    const objectURL = URL.createObjectURL(blob);
+
+    document.getElementById(imgElementId).src = objectURL;
 }
