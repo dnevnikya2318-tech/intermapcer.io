@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
-            'bypass-tunnel-reminder': true
+            'bypass-tunnel-reminder': 'true'
         }
     })
     .then(response => {
@@ -105,7 +105,7 @@ async function showMap(filePath) {
             method: 'GET',
             headers: { 
                 'Content-Type': 'application/json',
-                'bypass-tunnel-reminder': true
+                'bypass-tunnel-reminder': 'true'
             }
         });
         const data = await response.json();
