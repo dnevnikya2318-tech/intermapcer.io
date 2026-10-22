@@ -135,8 +135,8 @@ async function createMarker(point) {
     const marker = document.createElement('div');
     marker.className = 'marker';
     marker.dataset.id = id;
-    marker.style.left = `${point.X}px`;
-    marker.style.top = `${point.Y}px`;
+    marker.style.left = `${point.X}%`;
+    marker.style.top = `${point.Y}%`;
     marker.textContent = point.MarkType;
     marker.style.color = markerColorSelection(point.MarkType);
     marker.style.width = `${9 + point.Size}px`;
@@ -170,8 +170,8 @@ async function createMarker(point) {
     
     label.className = 'marker-label';
     label.dataset.id = id;
-    label.style.left = `${point.X}px`;
-    label.style.top = `${point.Y + 10}px`;
+    label.style.left = `${point.X}%`;
+    label.style.top = `${point.Y}%`;
     label.style.display = 'none';
 
     // Показывает данные точки при нажатии на неё

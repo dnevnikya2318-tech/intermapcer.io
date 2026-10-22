@@ -148,8 +148,8 @@ async function createMarker(point) {
     const marker = document.createElement('div');
     marker.className = 'marker';
     marker.dataset.id = id;
-    marker.style.left = `${point.X}px`;
-    marker.style.top = `${point.Y}px`;
+    marker.style.left = `${point.X}%`;
+    marker.style.top = `${point.Y}%`;
     marker.textContent = point.MarkType;
     marker.style.color = markerColorSelection(point.MarkType);
     marker.style.width = `${9 + point.Size}px`;
@@ -183,12 +183,10 @@ async function createMarker(point) {
     
     label.className = 'marker-label';
     label.dataset.id = id;
-    label.style.left = `${point.X}px`;
-    label.style.top = `${point.Y + 10}px`;
+    label.style.left = `${point.X}%`;
+    label.style.top = `${point.Y}%`;
     label.style.display = 'none';
 
-    // TO UPDATE
-    // Добавить кнопку UPDATE 
     const showDeleteHandler = (e) => {
         hidePopups();
         e.preventDefault();
@@ -291,7 +289,6 @@ async function showMap(filePath) {
     }
 }
 
-//TOUPDATE
 // Отображает название карты и уровень доступа, а также реагирует на их изменения.
 async function showTitle() {
     const response = await fetch(`${apiBaseUrl}/maps/${currMapId}`, {
@@ -317,7 +314,7 @@ async function showTitle() {
                 headers: { 
                     'Content-Type': 'application/json', 
                     'bypass-tunnel-reminder': 'true'
-                 }
+                }
             });
             oldMap = await oldResponse.json();
             const newResponse = await fetch(`${apiBaseUrl}/maps/${currMapId}`, {
@@ -326,7 +323,7 @@ async function showTitle() {
                     'Content-Type': 'application/json', 
                     'Authorization': `Bearer ${token}`,
                     'bypass-tunnel-reminder': 'true'
-                 },
+                },
                 body: JSON.stringify({ ownerId: oldMap.ownerId, title: mapTitleInput.value, isPublic: oldMap.isPublic, imagePath: oldMap.imagePath, imageName: oldMap.imageName })
             })
         } catch (error) {
@@ -468,6 +465,7 @@ addLabelBtn.addEventListener('click', async () => {
 
     let markImageName = null;
     let markImagePath = null;
+    const rect = imageWrapper.getBoundingClientRect();
     if (currMarkImage != null)
     {
         const imageUploadResponse = await s3Response(currMarkImage);
@@ -488,8 +486,8 @@ addLabelBtn.addEventListener('click', async () => {
                 mapId: currMapId, 
                 title: titleInput.value, 
                 description: descriptionInput.value, 
-                x: Math.round(popupPoint.x),
-                y: Math.round(popupPoint.y),
+                x: popupPoint.x / rect.width * 100,
+                y: popupPoint.y / rect.width * 100,
                 size: parseInt(sizeResult.textContent, 10),
                 markType: sizePreview.textContent,
                 imagePath: markImagePath, 
@@ -505,8 +503,8 @@ addLabelBtn.addEventListener('click', async () => {
             currMapId, 
             titleInput.value, 
             descriptionInput.value, 
-            Math.round(popupPoint.x), 
-            Math.round(popupPoint.y), 
+            popupPoint.x / rect.width * 100, 
+            popupPoint.y / rect.width * 100, 
             parseInt(sizeResult.textContent, 10), 
             sizePreview.textContent,
             markImagePath,
