@@ -54,8 +54,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         return response.json();
     })
-    .then(data => {
-        renderPublicData(data);
+    .then(async data => {
+        await renderPublicData(data);
     })
     .catch(error => {
         console.error('Error occured during loading:', error);
@@ -71,10 +71,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 })
 
-function renderPublicData(data) {
+async function renderPublicData(data) {
     currMapId = data.id;
     mapTitleInput.value = data.title;
-    showMap(s3BaseUrl + data.imageName);
+    await showMap(s3BaseUrl + data.imageName);
 }
 
 function hidePopups() {
