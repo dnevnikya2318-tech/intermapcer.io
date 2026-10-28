@@ -67,6 +67,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     })
 })
 
+window.onload = function () {
+    const preloader = document.getElementById('pagePreloader');
+    if (preloader) {
+        preloader.classList.add('done');
+    }
+}
+
 function renderPublicData(data) {
     currMapId = data.id;
     mapTitleInput.value = data.title;
