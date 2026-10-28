@@ -122,7 +122,8 @@ async function showMap(filePath) {
             }
         });
         const data = await response.json();
-        data.forEach(async element => {
+
+        await Promise.all(data.map(async (element) => {
             const point = new Point(
                 element.id,
                 element.mapId,
@@ -136,8 +137,9 @@ async function showMap(filePath) {
                 element.imageName
             );
             await createMarker(point);
-    })} catch(error) {
-        console.log(error);
+        }))
+    } catch(error) {
+        throw error;
     }
 }
 
