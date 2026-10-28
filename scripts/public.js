@@ -28,11 +28,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const fileId = urlParams.get('map');
     const logoutBtn = document.getElementById('logoutBtn');
-
-    configResponse = await fetch('../config.json');
-    config = await configResponse.json();
-    apiBaseUrl = config.API_BASE_URL;
-    s3BaseUrl = config.S3_BASE_URL;
+    const preloader = document.getElementById('pagePreloader');
+    
+    if(logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('authToken');
+            window.location.href = '../login/';
+        })
+    }
 
     if (!fileId) {
         console.error('No file ID in URL!');
@@ -40,36 +43,42 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    const backendUrl = `${apiBaseUrl}/maps/public/${fileId}`
-    await fetch(backendUrl, {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json',
-            'bypass-tunnel-reminder': 'true'
-        }
-    })
-    .then(response => {
+    try {
+        configResponse = await fetch('../config.json');
+        if(!configResponse.ok) throw new Error('Failed to load config');
+        config = await configResponse.json();
+
+        apiBaseUrl = config.API_BASE_URL;
+        s3BaseUrl = config.S3_BASE_URL;
+        const backendUrl = `${apiBaseUrl}/maps/public/${fileId}`
+
+        const response = await fetch(backendUrl, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'bypass-tunnel-reminder': 'true'
+            }
+        });
+
         if (!response.ok) {
             throw new Error(`Server error: ${response.status}`);
         }
-        return response.json();
-    })
-    .then(async data => {
-        await renderPublicData(data);
-    })
-    .catch(error => {
-        console.error('Error occured during loading:', error);
-    });
 
-    logoutBtn.addEventListener('click', () => {
-        localStorage.removeItem('authToken');
-        window.location.href = '../login/';
-    })
-    const preloader = document.getElementById('pagePreloader');
-    if (preloader) {
-        preloader.classList.add('done');
-    }
-})
+        const data = await response.json();
+
+        await renderPublicData(data);
+
+        if (preloader) {
+            preloader.classList.add('done');
+        }
+    } catch (error) {
+        console.error('Error occured during loading:', error)
+        if (preloader)
+        {
+            preloader.innerHTML = '<div class="error-msg">Loading error. Please, try again later.</div>'
+        }
+    }  
+});
 
 async function renderPublicData(data) {
     currMapId = data.id;
