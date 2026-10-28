@@ -65,14 +65,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         localStorage.removeItem('authToken');
         window.location.href = '../login/';
     })
-})
-
-window.onload = function () {
     const preloader = document.getElementById('pagePreloader');
     if (preloader) {
         preloader.classList.add('done');
     }
-}
+})
 
 function renderPublicData(data) {
     currMapId = data.id;
