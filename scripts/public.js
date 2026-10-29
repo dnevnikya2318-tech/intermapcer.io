@@ -56,7 +56,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
-                'bypass-tunnel-reminder': 'true'
+                'bypass-tunnel-reminder': 'true',
+                'tuna-skip-browser-warning': 'true'
             }
         });
 
@@ -118,7 +119,8 @@ async function showMap(filePath) {
             method: 'GET',
             headers: { 
                 'Content-Type': 'application/json',
-                'bypass-tunnel-reminder': 'true'
+                'bypass-tunnel-reminder': 'true',
+                'tuna-skip-browser-warning': 'true'
             }
         });
         const data = await response.json();
@@ -256,7 +258,8 @@ async function loadImage(imageUrl, imgElementId) {
     const response = await fetch(imageUrl, {
         method: 'GET',
         headers: {
-            'bypass-tunnel-reminder': 'true'
+            'bypass-tunnel-reminder': 'true',
+            'tuna-skip-browser-warning': 'true'
         }
     });
 

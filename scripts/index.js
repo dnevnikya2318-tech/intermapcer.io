@@ -266,7 +266,8 @@ async function showMap(filePath) {
             method: 'GET',
             headers: { 
                 'Content-Type': 'application/json',
-                'bypass-tunnel-reminder': 'true'
+                'bypass-tunnel-reminder': 'true',
+                'tuna-skip-browser-warning': 'true'
             }
         });
         const data = await response.json();
@@ -295,7 +296,8 @@ async function showTitle() {
         method: 'GET',
         headers: { 
             'Content-Type': 'application/json', 
-            'bypass-tunnel-reminder': 'true'
+            'bypass-tunnel-reminder': 'true',
+            'tuna-skip-browser-warning': 'true'
         }
     });
     const mapTitleInput = document.getElementById('mapTitleInput');
@@ -313,7 +315,8 @@ async function showTitle() {
                 method: 'GET',
                 headers: { 
                     'Content-Type': 'application/json', 
-                    'bypass-tunnel-reminder': 'true'
+                    'bypass-tunnel-reminder': 'true',
+                    'tuna-skip-browser-warning': 'true'
                 }
             });
             oldMap = await oldResponse.json();
@@ -322,7 +325,8 @@ async function showTitle() {
                 headers: { 
                     'Content-Type': 'application/json', 
                     'Authorization': `Bearer ${token}`,
-                    'bypass-tunnel-reminder': 'true'
+                    'bypass-tunnel-reminder': 'true',
+                    'tuna-skip-browser-warning': 'true'
                 },
                 body: JSON.stringify({ ownerId: oldMap.ownerId, title: mapTitleInput.value, isPublic: oldMap.isPublic, imagePath: oldMap.imagePath, imageName: oldMap.imageName })
             })
@@ -355,7 +359,8 @@ async function showTitle() {
                     method: 'GET',
                     headers: { 
                         'Content-Type': 'application/json', 
-                        'bypass-tunnel-reminder': 'true'
+                        'bypass-tunnel-reminder': 'true',
+                        'tuna-skip-browser-warning': 'true'
                      }
                 });
                 oldMap = await oldResponse.json();
@@ -364,7 +369,8 @@ async function showTitle() {
                     headers: { 
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`,
-                        'bypass-tunnel-reminder': 'true'
+                        'bypass-tunnel-reminder': 'true',
+                        'tuna-skip-browser-warning': 'true'
                     },
                     body: JSON.stringify({ ownerId: oldMap.ownerId, title: oldMap.title, isPublic: true, imagePath: oldMap.imagePath, imageName: oldMap.imageName })
                 })
@@ -379,7 +385,8 @@ async function showTitle() {
                     method: 'GET',
                     headers: { 
                         'Content-Type': 'application/json',
-                        'bypass-tunnel-reminder': 'true'
+                        'bypass-tunnel-reminder': 'true',
+                        'tuna-skip-browser-warning': 'true'
                      }
                 });
                 oldMap = await oldResponse.json();
@@ -388,7 +395,8 @@ async function showTitle() {
                     headers: { 
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`,
-                        'bypass-tunnel-reminder': 'true'
+                        'bypass-tunnel-reminder': 'true',
+                        'tuna-skip-browser-warning': 'true'
                     },
                     body: JSON.stringify({ ownerId: oldMap.ownerId, title: oldMap.title, isPublic: false, imagePath: oldMap.imagePath, imageName: oldMap.imageName })
                 })
@@ -480,7 +488,8 @@ addLabelBtn.addEventListener('click', async () => {
             headers: { 
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
-                'bypass-tunnel-reminder': 'true'
+                'bypass-tunnel-reminder': 'true',
+                'tuna-skip-browser-warning': 'true'
             },
             body: JSON.stringify({ 
                 mapId: currMapId, 
@@ -533,7 +542,8 @@ deleteLabelBtn.addEventListener('click', async () => {
             method: 'DELETE',
             headers: { 
                 'Authorization': `Bearer ${token}`,
-                'bypass-tunnel-reminder': 'true'
+                'bypass-tunnel-reminder': 'true',
+                'tuna-skip-browser-warning': 'true'
             }})
     } catch (error) {
         console.error(error);
@@ -578,7 +588,8 @@ const s3Response = async (fileObject) => {
             method: 'POST',
             headers: {
                     'Authorization': `Bearer ${token}`,
-                    'bypass-tunnel-reminder': 'true'
+                    'bypass-tunnel-reminder': 'true',
+                    'tuna-skip-browser-warning': 'true'
                 },
             body: formData
         });
@@ -626,7 +637,8 @@ async function loadMapsList(userId) {
         method: 'GET',
         headers: { 
             'Content-Type': 'application/json',
-            'bypass-tunnel-reminder': 'true'
+            'bypass-tunnel-reminder': 'true',
+            'tuna-skip-browser-warning': 'true'
          }
         });
 
@@ -673,7 +685,8 @@ async function uploadMap(file) {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json', 
-                    'bypass-tunnel-reminder': 'true'
+                    'bypass-tunnel-reminder': 'true',
+                    'tuna-skip-browser-warning': 'true'
                  },
                 body: JSON.stringify({ ownerId: ownerId, title: "My Map", isPublic: false, imagePath: s3Data.imageUrl, imageName: s3Data.imageName })
             });
@@ -736,7 +749,8 @@ async function deleteMap(id, imageName) {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`,
-                    'bypass-tunnel-reminder': 'true'
+                    'bypass-tunnel-reminder': 'true',
+                    'tuna-skip-browser-warning': 'true'
                 } 
             });
             resetMap();
@@ -953,7 +967,8 @@ updateLabelBtn.addEventListener('click', async (e) => {
             method: 'GET',
             headers: { 
                 'Content-Type': 'application/json',
-                'bypass-tunnel-reminder': 'true'
+                'bypass-tunnel-reminder': 'true',
+                'tuna-skip-browser-warning': 'true'
          }
         });
         const data = await response.json();
@@ -1014,7 +1029,8 @@ putLabelBtn.addEventListener('click', async () => {
             headers: { 
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
-                'bypass-tunnel-reminder': 'true'
+                'bypass-tunnel-reminder': 'true',
+                'tuna-skip-browser-warning': 'true'
             },
             body: JSON.stringify({ 
                 mapId: currPoint.MapId, 
@@ -1062,7 +1078,10 @@ putLabelBtn.addEventListener('click', async () => {
 const uploadImageFromUrl = async (imageUrl) => {
     try {
         const response = await fetch(imageUrl, {
-            headers: { 'bypass-tunnel-reminder': 'true' }
+            headers: { 
+                'bypass-tunnel-reminder': 'true',
+                'tuna-skip-browser-warning': 'true'
+             }
         });
 
         if(!response.ok) {
@@ -1096,7 +1115,8 @@ async function loadImage(imageUrl, imgElementId) {
     const response = await fetch(imageUrl, {
         method: 'GET',
         headers: {
-            'bypass-tunnel-reminder': 'true'
+            'bypass-tunnel-reminder': 'true',
+            'tuna-skip-browser-warning': 'true'
         }
     });
 

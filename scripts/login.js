@@ -37,7 +37,8 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json',
-                'bypass-tunnel-reminder': 'true'
+                'bypass-tunnel-reminder': 'true',
+                'tuna-skip-browser-warning': 'true'
              },
             body: JSON.stringify({ email: emailLogin, password: passwordLogin})
         });
@@ -81,7 +82,8 @@ registerForm.addEventListener('submit', async (e) => {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json', 
-                'bypass-tunnel-reminder': 'true'
+                'bypass-tunnel-reminder': 'true',
+                'tuna-skip-browser-warning': 'true'
              },
             body: JSON.stringify({
                 username: usernameInput,
@@ -126,7 +128,8 @@ verificationForm.addEventListener('submit', async (e) => {
             method: 'POST',
             headers: { 
                 'Content-Type': 'application/json', 
-                'bypass-tunnel-reminder': 'true'
+                'bypass-tunnel-reminder': 'true',
+                'tuna-skip-browser-warning': 'true'
             },
             body: JSON.stringify({ email: currEmail, code: verificationInput.value })
         });

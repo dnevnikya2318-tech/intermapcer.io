@@ -1,5 +1,5 @@
 {
-    "API_BASE_URL": "https://intermapcer-api.ru",
+    "API_BASE_URL": "https://frosty-seal-6749.a.tuna.free",
     "S3_BASE_URL": "https://intermapcer-api.online/user-images/",
     "FRONT_BASE_URL": "https://dnevnikya2318-tech.github.io/intermapcer.io"
 }
