@@ -1,5 +1,5 @@
 {
-    "API_BASE_URL": "https://intermapcer-api.ru:5064",
-    "S3_BASE_URL": "https://intermapcer-api.ru:9000/user-images/",
+    "API_BASE_URL": "https://intermapcer-api.ru:5443",
+    "S3_BASE_URL": "https://intermapcer-api.ru:9443/user-images/",
     "FRONT_BASE_URL": "https://dnevnikya2318-tech.github.io/intermapcer.io"
 }
