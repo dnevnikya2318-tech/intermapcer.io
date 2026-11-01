@@ -41,6 +41,11 @@ let apiBaseUrl = null;
 let s3BaseUrl = null;
 let frontBaseUrl = null;
 
+// Variables for scroll by grabbing the map feature
+let isDown = false;
+let startX, startY;
+let scrollLeft, scrollTop;
+
 class Point {
     constructor(id, mapId, title, description, x, y, size, markType, imagePath, imageName) {
         this.Id = id;
@@ -1115,8 +1120,7 @@ async function loadImage(imageUrl, imgElementId) {
     const response = await fetch(imageUrl, {
         method: 'GET',
         headers: {
-            'bypass-tunnel-reminder': 'true',
-            'tuna-skip-browser-warning': 'true'
+            'bypass-tunnel-reminder': 'true'
         }
     });
 
@@ -1127,3 +1131,38 @@ async function loadImage(imageUrl, imgElementId) {
 
     imgElementId.src = objectURL;
 }
+
+fullPreview.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    if (e.button !== 0) return;
+
+    isDown = true;
+    fullPreview.classList.add('active');
+
+    startX = e.clientX;
+    startY = e.clientY;
+
+    scrollLeft = window.scrollX || window.pageXOffset;
+    scrollTop = window.scrollY || window.pageYOffset;
+});
+
+window.addEventListener('mouseleave', () => {
+    isDown = false;
+    fullPreview.classList.remove('active');
+});
+
+window.addEventListener('mouseup', () => {
+    isDown = false;
+    fullPreview.classList.remove('active');
+});
+
+window.addEventListener('mousemove', (e) => {
+    if (!isDown) return;
+
+    e.preventDefault();
+
+    const walkX = e.clientX - startX;
+    const walkY = e.clientY - startY;
+
+    window.scrollTo(scrollLeft - walkX, scrollTop - walkY);
+});

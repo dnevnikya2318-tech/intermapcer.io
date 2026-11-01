@@ -342,14 +342,19 @@ header{
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 12px 12px 12px rgba(0, 0, 0, 1),
-    -7px -7px 7px rgb(25, 21, 9);
-    
+    -7px -7px 7px rgb(25, 21, 9);  
 }
+
+
 
 #fullPreview {
     display: block;
     width: 100%;
+    cursor: grab;
     user-select: none;
+}
+#fullPreview.active {
+    cursor: grabbing;
 }
 
 #markersLayer {
@@ -372,7 +377,7 @@ header{
     border-radius: 50%;
     transform: translate(-50%, -50%);
     box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
-    cursor: context-menu;
+    cursor: pointer;
     justify-content: center;
     text-align: center;
 }
