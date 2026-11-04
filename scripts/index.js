@@ -529,6 +529,8 @@ addLabelBtn.addEventListener('click', async () => {
 
         titleInput.value = '';
         descriptionInput.value = '';
+        titleInputCount.textContent = titleInputMaxChar;
+        descriptionInputCount.textContent = descriptionInputMaxChar;
 
         hidePopups();
     } catch (error) {
